@@ -26,4 +26,4 @@ jobs:
               run: make install
 
             - name: Run pre-commit
-              run: uv run pre-commit run --files
+              run: uv run pre-commit run --all-files
