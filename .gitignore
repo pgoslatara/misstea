@@ -1,0 +1,9 @@
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+multi_tool_agent/.env
+.env
+*.ipynb
+o365_token.txt
