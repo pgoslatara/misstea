@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import cache
 from typing import Dict, List, Optional, Union
 from zoneinfo import ZoneInfo
@@ -16,7 +16,7 @@ from misstea.constants import (
     MY_EMAIL_ADDRESS,
     OUTLOOK_TOKEN_PATH,
 )
-from misstea.utils import json_serial
+from misstea.utils import get_current_date, get_current_time, json_serial
 
 logger = logging.getLogger(__name__)
 
@@ -82,6 +82,50 @@ def get_availability(
     return {"status": "success", "report": json.dumps(r, default=json_serial)}
 
 
+def get_my_calendar(*, date_of_interest: str) -> Dict[str, str]:
+    """Get details of my calendar for a particular date.
+
+    Args:
+        date_of_interest (str): Date to get the calendar details for.
+
+    Returns:
+        Dict[str,str]: Details of all meetings for the provided date.
+
+    """
+    account = get_outlook_account()
+    schedule = account.schedule()
+    calendar = schedule.get_default_calendar()
+
+    date = datetime.strptime(date_of_interest, "%Y-%m-%d")
+    q = calendar.new_query("start").greater_equal(date)
+    q.chain("and").on_attribute("end").less_equal(date + timedelta(days=1))
+
+    events = [e.to_api_data() for e in calendar.get_events(limit=999, query=q)]
+
+    return {"status": "success", "report": json.dumps(events, default=json_serial)}
+
+
+def get_meeting_rooms() -> Dict[str, Union[List[Dict[str, str]], str]]:
+    """Return all meeting rooms and information about their facilities.
+
+    Returns:
+        List: List of meeting rooms and their facilities.
+
+    """
+    return {"status": "success", "report": MEETING_ROOMS}
+
+
+def get_my_email_address() -> Dict[str, str]:
+    """Get my email address. Can be used to look up my availability using get_availability().
+
+    Returns:
+        str: My email address
+
+    """
+    return {"status": "success", "report": MY_EMAIL_ADDRESS}
+
+
+@cache
 def get_outlook_account() -> Account:
     """Return an Outlook Account object.
 
@@ -144,26 +188,6 @@ def outlook_login() -> Account:
     return account
 
 
-def get_meeting_rooms() -> Dict[str, Union[List[Dict[str, str]], str]]:
-    """Return all meeting rooms and information about their facilities.
-
-    Returns:
-        List: List of meeting rooms and their facilities.
-
-    """
-    return {"status": "success", "report": MEETING_ROOMS}
-
-
-def get_my_email_address() -> Dict[str, str]:
-    """Get my email address.
-
-    Returns:
-        str: My email address
-
-    """
-    return {"status": "success", "report": MY_EMAIL_ADDRESS}
-
-
 outlook_agent = Agent(
     model=AGENT_MODEL,
     name="outlook_agent",
@@ -171,14 +195,15 @@ outlook_agent = Agent(
     You are a calendar organiser, you can check which rooms are available, check when calendars are free, when people are available and create meetings with room.
 
     Workflow:
-        * When asked to check if I am available or free for a particular time period, use get_availability().
-        * If you need to know the current date or current time, use multi_tool_agent.
+        * When asked to check if I am available or free for a particular time period, use get_availability() with my email address.
+        * If you need to know the current date or current time, use get_current_date() and get_current_time().
         * Being "available" is the opposite of being "busy", so if you want to know when something is available, then check when it is not busy.
 
     Constraints:
         * All times are in Amsterdam timezone, i.e. Central European Time.
         * You can log in to Outlook without asking me, no need to confirm this.
         * You only interact with emails ending in "@xebia.com".
+        * If you need the email address of a person, it takes the form "first_name.last_name@xebia.com".
         * The work week is from Monday to Friday inclusive.
         * The work day is from 9 am to 5 pm, Central European Time.
         * Python is your least favourite room as it's on the 4th floor.
@@ -200,7 +225,10 @@ outlook_agent = Agent(
     tools=[
         create_a_meeting,
         get_availability,
+        get_current_date,
+        get_current_time,
         get_meeting_rooms,
+        get_my_calendar,
         get_my_email_address,
     ],
 )
