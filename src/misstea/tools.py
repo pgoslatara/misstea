@@ -1,7 +1,12 @@
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 
-from misstea.sub_agents import github_agent, outlook_agent, terraform_agent
+from misstea.sub_agents import (
+    github_agent,
+    google_search_agent,
+    outlook_agent,
+    terraform_agent,
+)
 
 
 async def call_github_agent(
@@ -21,6 +26,25 @@ async def call_github_agent(
     )
     tool_context.state["github_agent_output"] = github_agent_output
     return github_agent_output
+
+
+async def call_google_search_agent(
+    question: str,
+    tool_context: ToolContext,
+):
+    """Tool to call Google Search agent.
+
+    Returns:
+        Any: The output from the Google Search agent.
+
+    """
+    agent_tool = AgentTool(agent=google_search_agent)
+
+    google_search_agent_output = await agent_tool.run_async(
+        args={"request": question}, tool_context=tool_context
+    )
+    tool_context.state["github_agent_output"] = google_search_agent_output
+    return google_search_agent_output
 
 
 async def call_outlook_agent(

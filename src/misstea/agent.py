@@ -1,7 +1,12 @@
 from google.adk.agents import LlmAgent
 
 from misstea.constants import AGENT_MODEL
-from misstea.tools import call_github_agent, call_outlook_agent, call_terraform_agent
+from misstea.tools import (
+    call_github_agent,
+    call_google_search_agent,
+    call_outlook_agent,
+    call_terraform_agent,
+)
 from misstea.utils import get_current_date, get_current_time
 
 root_agent: LlmAgent = LlmAgent(
@@ -19,6 +24,7 @@ root_agent: LlmAgent = LlmAgent(
             * Use get)current_date() and get_current_time() to always pass the current date and time when calling outlook_agent.
             * For all tasks related to meeting rooms, Outlook, calendars or availability of me or others, creating meetings or booking rooms, use outlook_agent.
             * To book meeting rooms, use outlook_agent.
+            * To search the internet, use google_search_agent.
 
         Constraints:
             * Do not return code samples from terraform.com.
@@ -29,6 +35,7 @@ root_agent: LlmAgent = LlmAgent(
         get_current_date,
         get_current_time,
         call_github_agent,
+        call_google_search_agent,
         call_outlook_agent,
         call_terraform_agent,
     ],
