@@ -3,12 +3,15 @@ import shutil
 from pathlib import Path
 
 import click
+import nest_asyncio
 import uvicorn
 from google.adk.cli.cli import run_cli
 from google.adk.cli.fast_api import get_fast_api_app
 
 from misstea import agent  # noqa: F401
 from misstea.logger import configure_console_logging
+
+nest_asyncio.apply()
 
 
 @click.command()
@@ -30,7 +33,7 @@ def cli(command: str, port: int, verbosity: int) -> None:
 
     if command == "web":
         app = get_fast_api_app(
-            agent_dir=Path(__file__).parent.parent.absolute().__str__(), web=True
+            agents_dir=Path(__file__).parent.parent.absolute().__str__(), web=True
         )
         config = uvicorn.Config(
             app,

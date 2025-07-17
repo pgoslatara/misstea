@@ -97,10 +97,15 @@ def get_my_calendar(*, date_of_interest: str) -> Dict[str, str]:
     calendar = schedule.get_default_calendar()
 
     date = datetime.strptime(date_of_interest, "%Y-%m-%d")
-    q = calendar.new_query("start").greater_equal(date)
-    q.chain("and").on_attribute("end").less_equal(date + timedelta(days=1))
-
-    events = [e.to_api_data() for e in calendar.get_events(limit=999, query=q)]
+    events = [
+        e.to_api_data()
+        for e in calendar.get_events(
+            end_recurring=(date + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:00"),
+            include_recurring=True,
+            limit=999,
+            start_recurring=date.strftime("%Y-%m-%dT%H:%M:00"),
+        )
+    ]
 
     return {"status": "success", "report": json.dumps(events, default=json_serial)}
 
