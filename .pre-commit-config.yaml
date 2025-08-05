@@ -15,26 +15,21 @@ repos:
           - id: end-of-file-fixer
     - repo: local
       hooks:
-        - id: ruff
+        - entry: uv run ruff check --force-exclude --config pyproject.toml --fix
+          language: system
+          id: ruff
           name: ruff
-          entry: uv run ruff check --force-exclude --config pyproject.toml --fix
-          language: python
-          types_or: [python, pyi, jupyter]
           require_serial: true
-    - repo: local
-      hooks:
-        - id: ruff-format
+          types_or: [python, pyi, jupyter]
+        - entry: uv run ruff format --force-exclude --config pyproject.toml
+          id: ruff-format
+          language: system
           name: ruff-format
-          entry: uv run ruff format --force-exclude --config pyproject.toml
-          language: python
-          types_or: [python, pyi, jupyter]
           require_serial: true
-    - repo: local
-      hooks:
-          - id: mypy
-            args: ["--install-types", "--explicit-package-bases", "--ignore-missing-imports", "--scripts-are-modules", "--non-interactive"]
-            entry: uv run mypy
-            language: system
-            name: mypy
-            require_serial: true
-            types_or: [python, pyi]
+          types_or: [python, pyi, jupyter]
+        - entry: uv run ty check
+          id: ty
+          language: system
+          name: ty
+          require_serial: true
+          types_or: [python, pyi]
