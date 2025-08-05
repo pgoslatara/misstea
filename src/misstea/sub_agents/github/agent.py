@@ -35,9 +35,19 @@ def github_mcp():
     )
 
 
-github_agent = Agent(
-    model=AGENT_MODEL,
-    name="github_agent",
-    instruction="You are a data engineer doing research on code from GitHub. When asked for examples, you always use the top examples returned from GitHubs `search_code` tool.",
-    tools=[github_mcp()],
-)
+def get_github_agent() -> Agent:
+    """Return a GitHub agent.
+
+    Returns:
+        Agent: The GitHub agent.
+
+    """
+    return Agent(
+        model=AGENT_MODEL,
+        name="github_agent",
+        instruction="You are a data engineer doing research on code from GitHub. When asked for examples, you always use the top examples returned from GitHubs `search_code` tool.",
+        tools=[github_mcp()],
+    )
+
+
+github_agent = get_github_agent()

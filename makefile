@@ -1,2 +1,7 @@
+.PHONY: install test
+
 install:
-	uv sync --extra dev
+	uv pip install -e '.[dev]'
+
+test:
+	pytest -n 5 --cov=misstea

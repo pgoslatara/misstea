@@ -193,10 +193,17 @@ def outlook_login() -> Account:
     return account
 
 
-outlook_agent = Agent(
-    model=AGENT_MODEL,
-    name="outlook_agent",
-    instruction="""
+def get_outlook_agent() -> Agent:
+    """Return an Outlook agent.
+
+    Returns:
+        Agent: The Outlook agent.
+
+    """
+    return Agent(
+        model=AGENT_MODEL,
+        name="outlook_agent",
+        instruction="""
     You are a calendar organiser, you can check which rooms are available, check when calendars are free, when people are available and create meetings with room.
 
     Workflow:
@@ -227,13 +234,16 @@ outlook_agent = Agent(
     Notes:
         * A screen is also referred to as a TV or a monitor.
     """,
-    tools=[
-        create_a_meeting,
-        get_availability,
-        get_current_date,
-        get_current_time,
-        get_meeting_rooms,
-        get_my_calendar,
-        get_my_email_address,
-    ],
-)
+        tools=[
+            create_a_meeting,
+            get_availability,
+            get_current_date,
+            get_current_time,
+            get_meeting_rooms,
+            get_my_calendar,
+            get_my_email_address,
+        ],
+    )
+
+
+outlook_agent = get_outlook_agent()

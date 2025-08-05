@@ -5,7 +5,7 @@ from mcp import StdioServerParameters
 from misstea.constants import AGENT_MODEL
 
 
-def terraform_mcp():
+def terraform_mcp() -> MCPToolset:
     """Return a Terraform MCP Toolset.
 
     Returns:
@@ -21,9 +21,19 @@ def terraform_mcp():
     )
 
 
-terraform_agent = Agent(
-    model=AGENT_MODEL,
-    name="terraform_agent",
-    instruction="You are a data engineer doing research on how to use Terraform modules. You always use Terraform's documentation to answer questions but you never return code examples.",
-    tools=[terraform_mcp()],
-)
+def get_terraform_agent() -> Agent:
+    """Return a Terraform agent.
+
+    Returns:
+        Agent: The Terraform agent.
+
+    """
+    return Agent(
+        model=AGENT_MODEL,
+        name="terraform_agent",
+        instruction="You are a data engineer doing research on how to use Terraform modules. You always use Terraform's documentation to answer questions but you never return code examples.",
+        tools=[terraform_mcp()],
+    )
+
+
+terraform_agent = get_terraform_agent()
