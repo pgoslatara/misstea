@@ -12,8 +12,11 @@ on:
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+  MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
+  MICROSOFT_CLIENT_SECRET: ${{ secrets.MICROSOFT_CLIENT_SECRET }}
   MY_EMAIL_ADDRESS: ${{ secrets.MY_EMAIL_ADDRESS }}
   PERSONAL_ACCESS_TOKEN_GITHUB: ${{ secrets.PERSONAL_ACCESS_TOKEN_GITHUB }}
+  TENANT_ID: ${{ secrets.TENANT_ID }}
 
 jobs:
     ci-pipeline:
