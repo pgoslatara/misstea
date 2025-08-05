@@ -8,6 +8,7 @@ on:
   push:
       branches:
           - main
+  workflow_dispatch:
 
 jobs:
     ci-pipeline:
@@ -23,7 +24,7 @@ jobs:
               run: uv python install
 
             - name: Install dependencies
-              run: make install
+              run: make install argument='--system'
 
             - name: Run pre-commit
               run: uv run pre-commit run --all-files
