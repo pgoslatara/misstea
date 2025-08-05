@@ -3,9 +3,9 @@ authors = [
     {name = "Padraic Slattery", email = "pgoslatara@gmail.com"}
 ]
 dependencies = [
-    "click>=8.2.1",
-    "google-adk>=1",
-    "o365>=2.1.2"
+    "click>=8,<9",
+    "google-adk>=1,<2",
+    "o365>=2.1.2,<3"
 ]
 description = "Add your description here"
 license-files = ["LICENSE"]
@@ -23,8 +23,7 @@ dev = [
     "pytest-cov~=6.0",
     "pytest-xdist~=3.0",
     "ruff~=0.0",
-    "ty~=0.0",
-    "types-requests"
+    "ty~=0.0"
 ]
 
 [project.scripts]
