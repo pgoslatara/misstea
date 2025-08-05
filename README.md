@@ -36,7 +36,7 @@ Here's how to get started with Miss Tea in a jiffy:
     export MY_EMAIL_ADDRESS=<YOUR_EMAIL_ADDRESS>
 
     # Only required if using the GitHub subagent
-    export GITHUB_PERSONAL_ACCESS_TOKEN=<TOKEN>
+    export PERSONAL_ACCESS_TOKEN_GITHUB=<TOKEN>
 
     # Only required if using the Outlook subagent
     export MICROSOFT_CLIENT_ID=<TOKEN>
