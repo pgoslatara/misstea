@@ -40,5 +40,8 @@ jobs:
             - name: Run pre-commit
               run: uv run pre-commit run --all-files
 
+            - name: Create Outlook auth file
+              run: echo -n "${{ secrets.O365_TOKEN_BASE64 }}" | base64 --decode >> o365_token.txt
+
             - name: Run pytest
               run: make test
