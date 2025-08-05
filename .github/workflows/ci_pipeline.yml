@@ -10,6 +10,9 @@ on:
           - main
   workflow_dispatch:
 
+env:
+  MY_EMAIL_ADDRESS: 'test@google.com'
+
 jobs:
     ci-pipeline:
         runs-on: ubuntu-latest
