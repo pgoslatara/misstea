@@ -1,6 +1,16 @@
-from misstea.sub_agents.outlook import agent
+from click.testing import CliRunner
+
+from misstea.main import cli
 
 
-def test_get_outlook_account_authenticated():
-    agent.get_outlook_account.cache_clear()
-    agent.get_outlook_account()
+def test_outlook_agent_e2e(caplog):
+    """Test that the outlook agent can be called and returns the expected output."""
+    runner = CliRunner()
+    result = runner.invoke(
+        cli,
+        ["run"],
+        input="List all meetings in my calendar on 1st August 2025.",
+    )
+
+    assert caplog.text.find("name: call_outlook_agent, args: {'question': ") >= 0
+    assert "Meeting for misstea unit tests" in result.stdout
