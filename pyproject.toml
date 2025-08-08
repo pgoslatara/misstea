@@ -30,6 +30,12 @@ dev = [
 misstea = "misstea.main:cli"
 outlook_token = "misstea.sub_agents.outlook.utils:generate_outlook_token"
 
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
 [tool.black]
 line-length = 99
 include = '/project$|\.pyi?$'
