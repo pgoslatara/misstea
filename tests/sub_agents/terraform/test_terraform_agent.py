@@ -12,4 +12,4 @@ def test_terraform_agent_e2e():
         input="Using Terraform AWS provider version 6.0.0, how many attributes are exported by the aws_s3_bucket resource? Return the result as an integer, do not include any other information or string characters.",
     )
 
-    assert int(result.stdout.split("\n")[-2].split(":")[-1]) == 9
+    assert int(result.stdout.split("\n")[-2].split(":")[-1].strip()) == 9

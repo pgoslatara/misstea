@@ -23,11 +23,11 @@ def github_mcp():
                 "-i",
                 "--rm",
                 "-e",
-                "PERSONAL_ACCESS_TOKEN_GITHUB",
+                "GITHUB_PERSONAL_ACCESS_TOKEN",
                 "ghcr.io/github/github-mcp-server",
             ],
             env={
-                "PERSONAL_ACCESS_TOKEN_GITHUB": os.environ[
+                "GITHUB_PERSONAL_ACCESS_TOKEN": os.environ[
                     "PERSONAL_ACCESS_TOKEN_GITHUB"
                 ]
             },
