@@ -2,6 +2,7 @@ from google.adk.agents import LlmAgent
 
 from misstea.constants import AGENT_MODEL
 from misstea.tools import (
+    call_coding_agent,
     call_github_agent,
     call_google_search_agent,
     call_outlook_agent,
@@ -25,6 +26,7 @@ root_agent: LlmAgent = LlmAgent(
             * For all tasks related to meeting rooms, Outlook, calendars or availability of me or others, creating meetings or booking rooms, use outlook_agent.
             * To book meeting rooms, use outlook_agent.
             * To search the internet, use google_search_agent.
+            * To read, write, or modify files, use coding_agent.
 
         Constraints:
             * Do not return code samples from terraform.com.
@@ -34,6 +36,7 @@ root_agent: LlmAgent = LlmAgent(
     tools=[
         get_current_date,
         get_current_time,
+        call_coding_agent,
         call_github_agent,
         call_google_search_agent,
         call_outlook_agent,

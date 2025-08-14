@@ -2,11 +2,31 @@ from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 
 from misstea.sub_agents import (
+    coding_agent,
     github_agent,
     google_search_agent,
     outlook_agent,
     terraform_agent,
 )
+
+
+async def call_coding_agent(
+    question: str,
+    tool_context: ToolContext,
+):
+    """Tool to call Coding agent.
+
+    Returns:
+        Any: The output from the Coding agent.
+
+    """
+    agent_tool = AgentTool(agent=coding_agent)
+
+    coding_agent_output = await agent_tool.run_async(
+        args={"request": question}, tool_context=tool_context
+    )
+    tool_context.state["coding_agent_output"] = coding_agent_output
+    return coding_agent_output
 
 
 async def call_github_agent(
