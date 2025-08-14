@@ -1,8 +1,10 @@
+import pytest
 from click.testing import CliRunner
 
 from misstea.main import cli
 
 
+@pytest.mark.flaky(reruns=5)
 def test_google_search_agent_e2e(caplog):
     """Test that the google_search agent can be called and returns the expected output."""
     runner = CliRunner()

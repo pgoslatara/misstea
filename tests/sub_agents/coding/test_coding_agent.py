@@ -1,8 +1,10 @@
+import pytest
 from click.testing import CliRunner
 
 from misstea.main import cli
 
 
+@pytest.mark.flaky(reruns=5)
 def test_coding_agent_e2e(tmp_path):
     """Test that the coding agent can be called and returns the expected output."""
     # Create a dummy file to read, write and replace

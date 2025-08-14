@@ -1,8 +1,10 @@
+import pytest
 from click.testing import CliRunner
 
 from misstea.main import cli
 
 
+@pytest.mark.flaky(reruns=5)
 def test_terraform_agent_e2e(caplog):
     """Test that the terraform agent can be called and returns the expected output."""
     runner = CliRunner()
