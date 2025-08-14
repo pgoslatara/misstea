@@ -2,9 +2,9 @@
 
 Ah, go on, go on, go on! Welcome to Miss Tea, your friendly AI assistant, inspired by the one and only Mrs. Doyle. She's here to help you with all your coding needs, and she won't take no for an answer!
 
-<div style="text-align: center;">
-    <img src="./images/mrs_doyle.png" align="center" alt="Description of your image" width="50%" height="auto">
-</div>
+<p align="center">
+  <img src="./images/mrs_doyle.png" width="50%" height="auto">
+</p>
 
 ## Requirements
 
