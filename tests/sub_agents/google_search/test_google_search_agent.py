@@ -1,18 +1,12 @@
 import pytest
-from click.testing import CliRunner
-
-from misstea.main import cli
+from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
 
-@pytest.mark.flaky(reruns=5)
-def test_google_search_agent_e2e(caplog):
-    """Test that the google_search agent can be called and returns the expected output."""
-    runner = CliRunner()
-    result = runner.invoke(
-        cli,
-        ["run"],
-        input="What is the capital of France?",
+@pytest.mark.flaky(reruns=3)
+@pytest.mark.asyncio
+async def test_google_search_agent_with_single_test_file():
+    """Test the google_search agent's basic ability via a session file."""
+    await AgentEvaluator.evaluate(
+        agent_module="misstea.sub_agents.google_search",
+        eval_dataset_file_path_or_dir="tests/sub_agents/google_search/google_search_agent.test.json",
     )
-
-    assert caplog.text.find("name: call_google_search_agent, args: {'question': ") >= 0
-    assert "paris" in result.stdout.lower()

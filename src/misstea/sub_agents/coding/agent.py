@@ -19,4 +19,4 @@ def get_coding_agent() -> Agent:
     )
 
 
-coding_agent = get_coding_agent()
+root_agent = get_coding_agent()

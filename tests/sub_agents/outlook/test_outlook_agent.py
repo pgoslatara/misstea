@@ -1,18 +1,12 @@
 import pytest
-from click.testing import CliRunner
-
-from misstea.main import cli
+from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
 
-@pytest.mark.flaky(reruns=5)
-def test_outlook_agent_e2e(caplog):
-    """Test that the outlook agent can be called and returns the expected output."""
-    runner = CliRunner()
-    result = runner.invoke(
-        cli,
-        ["run"],
-        input="List all meetings in my calendar on 1st August 2025.",
+@pytest.mark.flaky(reruns=3)
+@pytest.mark.asyncio
+async def test_outlook_agent_with_single_test_file():
+    """Test the outlook agent's basic ability via a session file."""
+    await AgentEvaluator.evaluate(
+        agent_module="misstea.sub_agents.outlook",
+        eval_dataset_file_path_or_dir="tests/sub_agents/outlook/outlook_agent.test.json",
     )
-
-    assert caplog.text.find("name: call_outlook_agent, args: {'question': ") >= 0
-    assert "Meeting for misstea unit tests" in result.stdout

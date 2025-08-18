@@ -1,0 +1,57 @@
+{
+  "eval_set_id": "terraform_agent_eval_set",
+  "name": "Terraform Agent Evaluation Set",
+  "description": "This is an eval set for unit testing the Terraform agent.",
+  "eval_cases": [
+    {
+      "eval_id": "count_s3_bucket_attributes",
+      "conversation": [
+        {
+          "invocation_id": "f7982664-0ab6-47cc-ab13-326656afdf75",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Using Terraform AWS provider version 6.0.0, count many attributes are exported by the aws_s3_bucket resource? Return the result as an integer, do not include any other information or string characters."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "9"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "serviceSlug": "s3_bucket",
+                  "providerName": "aws",
+                  "providerVersion": "6.0.0",
+                  "providerDataType": "resources",
+                  "providerNamespace": "hashicorp"
+                },
+                "name": "resolveProviderDocID"
+              },
+              {
+                "args": {
+                  "providerDocID": "9242510"
+                },
+                "name": "getProviderDocs"
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "misstea.sub_agents.terraform.agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    }
+  ]
+}

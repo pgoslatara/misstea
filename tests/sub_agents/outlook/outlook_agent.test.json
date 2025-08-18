@@ -1,0 +1,47 @@
+{
+  "eval_set_id": "outlook_agent_eval_set",
+  "name": "Outlook Agent Evaluation Set",
+  "description": "This is an eval set for unit testing the Outlook agent.",
+  "eval_cases": [
+    {
+      "eval_id": "list_meetings",
+      "conversation": [
+        {
+          "invocation_id": "e7982664-0ab6-47cc-ab13-326656afdf75",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Get all meetings in my calendar on 1st August 2025 and return the subject of the earliest meeting. Return just the subject, return no other information."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Meeting for misstea unit tests"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "date_of_interest": "2025-08-01"
+                },
+                "name": "get_my_calendar"
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "misstea.sub_agents.outlook.agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    }
+  ]
+}

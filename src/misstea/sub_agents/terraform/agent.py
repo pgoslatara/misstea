@@ -36,4 +36,4 @@ def get_terraform_agent() -> Agent:
     )
 
 
-terraform_agent = get_terraform_agent()
+root_agent = get_terraform_agent()

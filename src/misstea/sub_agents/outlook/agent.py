@@ -246,4 +246,4 @@ def get_outlook_agent() -> Agent:
     )
 
 
-outlook_agent = get_outlook_agent()
+root_agent = get_outlook_agent()
