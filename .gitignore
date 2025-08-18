@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 *.egg-info/
 multi_tool_agent/.env
+scripts/
 .coverage
 .env
 *.ipynb

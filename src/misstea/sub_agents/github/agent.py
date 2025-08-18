@@ -50,4 +50,4 @@ def get_github_agent() -> Agent:
     )
 
 
-github_agent = get_github_agent()
+root_agent = get_github_agent()
