@@ -1,6 +1,9 @@
 from google.adk.agents import Agent
-from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
-from mcp import StdioServerParameters
+from google.adk.tools.mcp_tool.mcp_toolset import (
+    MCPToolset,
+    StdioConnectionParams,
+    StdioServerParameters,
+)
 
 from misstea.constants import AGENT_MODEL
 
@@ -14,10 +17,12 @@ def terraform_mcp() -> MCPToolset:
     """
     # https://github.com/hashicorp/terraform-mcp-server?tab=readme-ov-file#usage-with-vs-code
     return MCPToolset(
-        connection_params=StdioServerParameters(
-            command="docker",
-            args=["run", "-i", "--rm", "hashicorp/terraform-mcp-server"],
-        ),
+        connection_params=StdioConnectionParams(
+            server_params=StdioServerParameters(
+                command="docker",
+                args=["run", "-i", "--rm", "hashicorp/terraform-mcp-server"],
+            )
+        )
     )
 
 

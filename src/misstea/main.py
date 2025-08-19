@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import shutil
 from pathlib import Path
 
@@ -21,6 +22,9 @@ nest_asyncio.apply()
 def cli(command: str, port: int, verbosity: int) -> None:
     """Provide the main CLI entry point for MissTea."""
     configure_console_logging(verbosity)
+    logging.getLogger("google_adk.google.adk.tools.base_authenticated_tool").setLevel(
+        logging.ERROR
+    )
 
     # Check is `*.egg-info` directory exists from running uv and delete
     egg_paths = [
