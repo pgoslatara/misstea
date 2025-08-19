@@ -42,6 +42,89 @@
         "user_id": "test_user",
         "state": {}
       }
+    },
+    {
+      "eval_id": "write_to_file",
+      "conversation": [
+        {
+          "invocation_id": "7d00c08c-003b-4114-946d-45a02e95d581",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Write 'This is a test' to a file at tests/sub_agents/coding/dummy_file_write.txt. When complete, return the word 'Completed'."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Completed"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "content": "This is a test",
+                  "path": "tests/sub_agents/coding/dummy_file_write.txt"
+                },
+                "name": "write_to_file"
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "misstea.sub_agents.coding.agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "replace_in_file",
+      "conversation": [
+        {
+          "invocation_id": "7d00c08c-003b-4114-946d-45a02e95d581",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Replace 'string' with 'integer' in tests/sub_agents/coding/dummy_file_replace.txt. When complete, return the word 'Completed'."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Completed"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "path": "tests/sub_agents/coding/dummy_file_replace.txt",
+                  "search": "string",
+                  "replace": "integer"
+                },
+                "name": "replace_in_file"
+              }
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "misstea.sub_agents.coding.agent",
+        "user_id": "test_user",
+        "state": {}
+      }
     }
   ]
 }
