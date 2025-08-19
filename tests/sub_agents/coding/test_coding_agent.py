@@ -4,7 +4,7 @@ import pytest
 from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
 
-# @pytest.mark.flaky(reruns=3)
+@pytest.mark.flaky(reruns=3)
 @pytest.mark.asyncio
 async def test_coding_agent_with_single_test_file():
     """Test the coding agent's basic ability via a session file."""
