@@ -1,8 +1,10 @@
+import os
+
 import pytest
 from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
 
-@pytest.mark.flaky(reruns=3)
+@pytest.mark.flaky(reruns=int(os.getenv("SUB_AGENT_TEST_RERUNS")) or 3)  # type: ignore
 @pytest.mark.asyncio
 async def test_terraform_agent():
     """Test the terraform agent's basic ability via a session file."""

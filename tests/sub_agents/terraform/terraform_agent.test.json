@@ -25,7 +25,24 @@
             "role": "model"
           },
           "intermediate_data": {
-            "tool_uses": [],
+            "tool_uses": [
+              {
+                "args": {
+                  "serviceSlug": "s3_bucket",
+                  "providerName": "aws",
+                  "providerVersion": "6.0.0",
+                  "providerDataType": "resources",
+                  "providerNamespace": "hashicorp"
+                },
+                "name": "resolveProviderDocID"
+              },
+              {
+                "args": {
+                  "providerDocID": "9242510"
+                },
+                "name": "getProviderDocs"
+              }
+            ],
             "intermediate_responses": []
           }
         }
