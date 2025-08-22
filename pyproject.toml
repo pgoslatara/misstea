@@ -3,6 +3,7 @@ authors = [
     {name = "Padraic Slattery", email = "pgoslatara@gmail.com"}
 ]
 dependencies = [
+    "chardet>=5,<6",
     "click>=8,<9",
     "google-adk[eval]>=1,<2",
     "o365>=2.1.2,<3"
