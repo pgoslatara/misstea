@@ -11,7 +11,7 @@
           "user_content": {
             "parts": [
               {
-                "text": "Using Terraform AWS provider version 6.0.0, count many attributes are exported by the aws_s3_bucket resource? Return the result as an integer, do not include any other information or string characters."
+                "text": "Using Terraform AWS provider version 6.0.0, count how many attributes are exported by the aws_s3_bucket resource? Return the result as an integer, do not include any other information or string characters."
               }
             ],
             "role": "user"
