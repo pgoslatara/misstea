@@ -43,5 +43,8 @@ jobs:
             - name: Create Outlook auth file
               run: echo -n "${{ secrets.O365_TOKEN_BASE64 }}" | base64 --decode >> o365_token.txt
 
+            - name: Setup tmate session
+              uses: mxschmitt/action-tmate@v3
+
             - name: Run pytest
               run: make test
