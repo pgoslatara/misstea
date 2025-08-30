@@ -28,7 +28,6 @@
             "tool_uses": [
               {
                 "args": {
-                  "encoding": null,
                   "file_path": "tests/sub_agents/coding/dummy_file.txt"
                 },
                 "name": "read_file"

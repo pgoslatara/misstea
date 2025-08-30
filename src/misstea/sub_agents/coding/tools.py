@@ -3,8 +3,57 @@ import logging
 from pathlib import Path
 
 import chardet
+import yaml  # Added this import
 
 logger = logging.getLogger(__name__)
+
+
+def list_directory_contents(
+    directory_path: str, include_subdirectories: str = "yes", type_filter: str = "all"
+) -> str:
+    """Recursively traverses a directory and its subdirectories, returning a list of objects based on the specified type_filter.
+
+    Args:
+        directory_path (str): The path to the directory to scan.
+        include_subdirectories: (Optional(str)): An optional string argument that can be "yes" or "no". Defaults to "yes".
+        type_filter (Optional(str)): An optional string argument that can be "files", "directories", or "all". Defaults to "all".
+
+    Returns:
+        str: List of objects matching the type_filter.
+
+    Raises:
+        ValueError: If an invalid include_subdirectories or type_filter is provided.
+        FileNotFoundError: If the specified directory_path does not exist or is not a directory.
+
+    """
+    path = Path(directory_path)
+    if not path.is_dir():
+        raise FileNotFoundError(f"Directory not found: {directory_path}")
+
+    if include_subdirectories == "yes":
+        iter_item = path.rglob("*")
+    elif include_subdirectories == "no":
+        iter_item = path.iterdir()
+    else:
+        raise ValueError(
+            f"include_subdirectories must be 'yes' or 'no'. Instead for `{include_subdirectories}`."
+        )
+
+    results = []
+    for item in iter_item:
+        if type_filter == "files":
+            if item.is_file():
+                results.append(item)
+        elif type_filter == "directories":
+            if item.is_dir():
+                results.append(item)
+        elif type_filter == "all":
+            results.append(item)
+        else:
+            raise ValueError(
+                f"Invalid type_filter: {type_filter}. Must be 'files', 'directories', or 'all'."
+            )
+    return json.dumps([str(x.absolute()) for x in results])
 
 
 def read_directory(path: str) -> str:
@@ -42,6 +91,7 @@ def read_directory(path: str) -> str:
             ".gz",
             ".gzip",
             ".ico",
+            ".idx",
             ".jpg",
             ".jpeg",
             ".lzma",
@@ -51,9 +101,11 @@ def read_directory(path: str) -> str:
             ".npy",
             ".npz",
             ".obj",
+            ".pack",
             ".pkl",
             ".png",
             ".pyc",
+            ".rev",
             ".sav",
             ".so",
             ".testcase",
@@ -66,31 +118,46 @@ def read_directory(path: str) -> str:
             "",
         ]:
             try:
-                data[file_path] = read_file(str(file_path.absolute()))
+                data[str(file_path.absolute())] = read_file(str(file_path.absolute()))
             except UnicodeDecodeError:
                 logger.error(f"Failed to read {file_path.suffix}")
-                data[file_path] = "Unable to read due to UnicodeDecodeError."
+                data[str(file_path.absolute())] = (
+                    "Unable to read due to UnicodeDecodeError."
+                )
 
+    # return json.dumps(data)
+    logger.debug(f"{data=}")
     return json.dumps(data)
 
 
-def read_file(
-    file_path: str, encoding: str = ""
-) -> str | None:  # Not encoding = None as ADK only works with str types
+def read_file(file_path: str, encoding: str = "") -> str | None:
     """Read a file, attempt to auto-detect encoding if not specified.
+
+    If the file is a YAML file, it returns the parsed YAML content.
 
     Args:
         file_path (str): The path to the file.
         encoding (str | None): The encoding to use. If None, chardet will attempt detection.
 
     Returns:
-        str | None: The content of the file if successful, otherwise None.
+        str | dict | list | None: The content of the file if successful, parsed if YAML, otherwise None.
 
     """
     path_obj = Path(file_path)
     if not path_obj.is_file():
         logger.error(f"The file '{file_path}' was not found.")
         return None
+
+    # YAML
+    if path_obj.suffix in [".yaml", ".yml"]:
+        try:
+            with path_obj.open(mode="r", encoding=encoding) as f:
+                content = f.read()
+
+                return yaml.safe_load(content)
+        except yaml.YAMLError as e:
+            logger.error(f"Error parsing YAML file '{file_path}': {e}")
+            return None
 
     # If encoding is not provided, attempt to detect it
     if not encoding:
