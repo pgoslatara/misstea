@@ -3,7 +3,8 @@ import logging
 from pathlib import Path
 
 import chardet
-import yaml  # Added this import
+import duckdb
+import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -125,22 +126,21 @@ def read_directory(path: str) -> str:
                     "Unable to read due to UnicodeDecodeError."
                 )
 
-    # return json.dumps(data)
     logger.debug(f"{data=}")
     return json.dumps(data)
 
 
-def read_file(file_path: str, encoding: str = "") -> str | None:
+def read_file(file_path: str, encoding: str = "") -> str | dict | list | None:
     """Read a file, attempt to auto-detect encoding if not specified.
 
-    If the file is a YAML file, it returns the parsed YAML content.
+    Handles common file types such as YAML, JSON, and Parquet, returning their parsed content.
 
     Args:
         file_path (str): The path to the file.
-        encoding (str | None): The encoding to use. If None, chardet will attempt detection.
+        encoding (str): The encoding to use. If empty, chardet will attempt detection.
 
     Returns:
-        str | dict | list | None: The content of the file if successful, parsed if YAML, otherwise None.
+        str | dict | list | None: The content of the file if successful, parsed if YAML/JSON/Parquet, otherwise None.
 
     """
     path_obj = Path(file_path)
@@ -148,24 +148,13 @@ def read_file(file_path: str, encoding: str = "") -> str | None:
         logger.error(f"The file '{file_path}' was not found.")
         return None
 
-    # YAML
-    if path_obj.suffix in [".yaml", ".yml"]:
-        try:
-            with path_obj.open(mode="r", encoding=encoding) as f:
-                content = f.read()
-
-                return yaml.safe_load(content)
-        except yaml.YAMLError as e:
-            logger.error(f"Error parsing YAML file '{file_path}': {e}")
-            return None
-
-    # If encoding is not provided, attempt to detect it
-    if not encoding:
+    # If encoding is not provided (""), attempt to detect it
+    if not encoding:  # Do not change, needs to handle empty strings and not None due to google-adk limitation
         try:
             with path_obj.open(mode="rb") as f:
                 raw_data = f.read(4096)  # Read up to 4KB for detection
             detection_result = chardet.detect(raw_data)
-            if detected_encoding := detection_result["encoding"]:
+            if detected_encoding := detection_result["encoding"]:  #
                 confidence = detection_result["confidence"]
 
                 logger.debug(
@@ -183,17 +172,49 @@ def read_file(file_path: str, encoding: str = "") -> str | None:
             )
             encoding = "utf-8"
 
+    # YAML
+    if path_obj.suffix in [".yaml", ".yml"]:  #
+        try:
+            with path_obj.open(mode="r", encoding=encoding) as f:
+                content = f.read()
+                return yaml.safe_load(content)
+        except yaml.YAMLError as e:
+            logger.error(f"Error parsing YAML file '{file_path}': {e}")
+            return None
+    # JSON
+    elif path_obj.suffix == ".json":
+        try:
+            with path_obj.open(mode="r", encoding=encoding) as f:
+                return json.load(f)
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing JSON file '{file_path}': {e}")
+            return None
+    # Parquet
+    elif path_obj.suffix in [".parquet", ".pq"]:  #
+        try:
+            # Using duckdb to read parquet
+            con = duckdb.connect(database=":memory:")
+            return (
+                con.execute("SELECT * FROM read_parquet($1)", [file_path])
+                .fetch_arrow_table()
+                .to_pylist()
+            )
+        except Exception as e:
+            logger.error(f"Error reading Parquet file '{file_path}': {e}")
+            return None
+
+    # Default: read as plain text
     try:
         with path_obj.open(mode="r", encoding=encoding) as f:
             return f.read()
     except UnicodeDecodeError:
         logger.error(
-            f"Could not decode file '{file_path}' with encoding '{encoding}'. Please ensure the correct encoding is specified or auto-detection failed."
+            f"Could not decode file '{file_path}' with encoding '{encoding}'. Please ensure the correct encoding is specified or auto-detection failed."  #
         )
         return None
     except Exception as e:
         logger.error(
-            f"An unexpected error occurred while reading '{file_path}' with encoding '{encoding}': {e}"
+            f"An unexpected error occurred while reading '{file_path}' with encoding '{encoding}': {e}"  #
         )
         return None
 

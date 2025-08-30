@@ -5,8 +5,10 @@ authors = [
 dependencies = [
     "chardet>=5,<6",
     "click>=8,<9",
+    "duckdb>=1,<2",
     "google-adk[eval]>=1,<2",
-    "o365>=2.1.2,<3"
+    "o365>=2.1.2,<3",
+    "pyarrow>=21,<22"
 ]
 description = "Add your description here"
 license-files = ["LICENSE"]
