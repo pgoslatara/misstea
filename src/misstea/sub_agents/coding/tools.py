@@ -24,12 +24,11 @@ def list_directory_contents(
 
     Raises:
         ValueError: If an invalid include_subdirectories or type_filter is provided.
-        FileNotFoundError: If the specified directory_path does not exist or is not a directory.
 
     """
     path = Path(directory_path)
     if not path.is_dir():
-        raise FileNotFoundError(f"Directory not found: {directory_path}")
+        logger.error(f"Directory not found: {directory_path}")
 
     if include_subdirectories == "yes":
         iter_item = path.rglob("*")
