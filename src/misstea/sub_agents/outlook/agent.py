@@ -3,7 +3,7 @@ import logging
 import os
 from datetime import datetime, timedelta
 from functools import cache
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional
 from zoneinfo import ZoneInfo
 
 from google.adk.agents import Agent
@@ -60,7 +60,6 @@ def get_availability(
     """Get the availability of the provided email addresses for the given time and date range.
 
     Args:
-        account (Account): Outlook Account object from outlook_login().
         email_addresses (List[str]): A list of email addresses for which to get their availability. Format is jane.doe@xebia.com for people and <ROOM_NAME>@xebia.com for meeting rooms.
         start (str): Start time.
         end (str): End time.
@@ -86,7 +85,7 @@ def get_my_calendar(*, date_of_interest: str) -> Dict[str, str]:
     """Get details of my calendar for a particular date.
 
     Args:
-        date_of_interest (str): Date to get the calendar details for.
+        date_of_interest (str): Date to get the calendar details for, must be in the format YYYY-MM-DD.
 
     Returns:
         Dict[str,str]: Details of all meetings for the provided date.
@@ -110,7 +109,12 @@ def get_my_calendar(*, date_of_interest: str) -> Dict[str, str]:
     return {"status": "success", "report": json.dumps(events, default=json_serial)}
 
 
-def get_meeting_rooms() -> Dict[str, Union[List[Dict[str, str]], str]]:
+def get_meeting_rooms() -> dict[
+    str,
+    list[dict[str, str]]
+    | Literal["success"]
+    | list[Any | dict[Any | str, Any | str | bool]],
+]:
     """Return all meeting rooms and information about their facilities.
 
     Returns:

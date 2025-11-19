@@ -11,7 +11,7 @@
           "user_content": {
             "parts": [
               {
-                "text": "What is the capital of France? This is a unit test so please return only the name of the city and no other information."
+                "text": "What is the capital of France? This is a unit test so please return only the name of the city and no other information. Return only a single word."
               }
             ],
             "role": "user"
@@ -19,7 +19,7 @@
           "final_response": {
             "parts": [
               {
-                "text": "Paris\nParis"
+                "text": "Paris"
               }
             ],
             "role": "model"

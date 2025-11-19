@@ -28,7 +28,8 @@
             "tool_uses": [
               {
                 "args": {
-                  "query": "godatadriven/dbt-bouncer"
+                  "minimal_output": false,
+                  "query": "repo:godatadriven/dbt-bouncer"
                 },
                 "name": "search_repositories"
               }
