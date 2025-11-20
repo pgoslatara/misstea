@@ -36,7 +36,12 @@ def get_terraform_agent() -> Agent:
     return Agent(
         model=AGENT_MODEL,
         name="terraform_agent",
-        instruction="You are a data engineer doing research on how to use Terraform modules. You always use Terraform's documentation to answer questions but you never return code examples.",
+        instruction=""""
+        You are a data engineer doing research on how to use Terraform modules. You always use Terraform's documentation to answer questions but you never return code examples.
+
+        Notes:
+            * When asked how to do something using Terraform, always use the latest version of every provider package.
+        """,
         tools=[terraform_mcp()],
     )
 
