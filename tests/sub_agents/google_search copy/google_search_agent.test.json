@@ -1,0 +1,40 @@
+{
+  "eval_set_id": "google_search_agent_eval_set",
+  "name": "Google Search Agent Evaluation Set",
+  "description": "This is an eval set for unit testing the Google Search agent.",
+  "eval_cases": [
+    {
+      "eval_id": "capital_of_france",
+      "conversation": [
+        {
+          "invocation_id": "d7982664-0ab6-47cc-ab13-326656afdf75",
+          "user_content": {
+            "parts": [
+              {
+                "text": "What is the capital of France? This is a unit test so please return only the name of the city and no other information. Return only a single word."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Paris"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "misstea.sub_agents.google_search.agent",
+        "user_id": "test_user",
+        "state": {}
+      }
+    }
+  ]
+}

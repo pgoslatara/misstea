@@ -4,6 +4,7 @@ from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 
 from misstea.sub_agents import (
+    calculator_agent,
     coding_agent,
     github_agent,
     google_search_agent,
@@ -37,6 +38,21 @@ async def _call_agent_helper(
     )
     tool_context.state[f"{agent_name}_agent_output"] = agent_output
     return agent_output
+
+
+async def call_calculator_agent(
+    question: str,
+    tool_context: ToolContext,
+) -> Any:
+    """Tool to call Calculator agent.
+
+    Returns:
+        Any: The output from the Calculator agent.
+
+    """
+    return await _call_agent_helper(
+        calculator_agent, "calculator", question, tool_context
+    )
 
 
 async def call_coding_agent(

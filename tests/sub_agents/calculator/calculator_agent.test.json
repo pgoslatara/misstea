@@ -1,17 +1,17 @@
 {
-  "eval_set_id": "image_generator_agent_eval_set",
-  "name": "Image Generator Agent Evaluation Set",
-  "description": "This is an eval set for unit testing the Image Generator agent.",
+  "eval_set_id": "calculator_agent_eval_set",
+  "name": "Calculator Agent Evaluation Set",
+  "description": "This is an eval set for unit testing the Calculator agent.",
   "eval_cases": [
     {
-      "eval_id": "basic_image",
+      "eval_id": "basic_calc",
       "conversation": [
         {
           "invocation_id": "d7982664-0ab6-47cc-ab13-326656afdf75",
           "user_content": {
             "parts": [
               {
-                "text": "Generate an image of the Eiffel tower on a snowy day. Tell me the name of the file where the image is saved (i.e. only the name and not the directory)."
+                "text": "What is 6 factorial? Return only the final answer."
               }
             ],
             "role": "user"
@@ -19,7 +19,7 @@
           "final_response": {
             "parts": [
               {
-                "text": "generated_image_."
+                "text": "720"
               }
             ],
             "role": "model"
@@ -31,7 +31,7 @@
         }
       ],
       "session_input": {
-        "app_name": "misstea.sub_agents.image_generator.agent",
+        "app_name": "misstea.sub_agents.calculator.agent",
         "user_id": "test_user",
         "state": {}
       }
