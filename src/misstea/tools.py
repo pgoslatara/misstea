@@ -6,6 +6,7 @@ from google.adk.tools.agent_tool import AgentTool
 from misstea.sub_agents import (
     calculator_agent,
     coding_agent,
+    filesystem_agent,
     github_agent,
     google_search_agent,
     image_generator_agent,
@@ -66,6 +67,21 @@ async def call_coding_agent(
 
     """
     return await _call_agent_helper(coding_agent, "coding", question, tool_context)
+
+
+async def call_filesystem_agent(
+    question: str,
+    tool_context: ToolContext,
+) -> Any:
+    """Tool to call Filesystem agent.
+
+    Returns:
+        Any: The output from the Filesystem agent.
+
+    """
+    return await _call_agent_helper(
+        filesystem_agent, "filesystem", question, tool_context
+    )
 
 
 async def call_github_agent(

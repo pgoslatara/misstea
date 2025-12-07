@@ -2,7 +2,9 @@ from google.adk.agents import LlmAgent
 
 from misstea.constants import AGENT_MODEL
 from misstea.tools import (
+    call_calculator_agent,
     call_coding_agent,
+    call_filesystem_agent,
     call_github_agent,
     call_google_search_agent,
     call_image_generator_agent,
@@ -38,7 +40,9 @@ root_agent: LlmAgent = LlmAgent(
     tools=[
         get_current_date,
         get_current_time,
+        call_calculator_agent,
         call_coding_agent,
+        call_filesystem_agent,
         call_github_agent,
         call_google_search_agent,
         call_image_generator_agent,
