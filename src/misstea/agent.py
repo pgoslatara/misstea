@@ -5,6 +5,7 @@ from misstea.tools import (
     call_coding_agent,
     call_github_agent,
     call_google_search_agent,
+    call_image_generator_agent,
     call_outlook_agent,
     call_terraform_agent,
 )
@@ -18,6 +19,7 @@ root_agent: LlmAgent = LlmAgent(
             * For all examples of code, you use GitHub's search endpoint.
             * For Terraform questions, you use the Terraform MCP server.
             * For GitHub info, you use the GitHub MCP server.
+            * For image generation, use the image_generation_agent.
             * For info about python packages you search http://pypi.org/.
             * If you need documentation about dbt, use the github.com/dbt-labs/docs.getdbt.com GitHub repository.
             * Include inline URLs for all relevant references.
@@ -39,6 +41,7 @@ root_agent: LlmAgent = LlmAgent(
         call_coding_agent,
         call_github_agent,
         call_google_search_agent,
+        call_image_generator_agent,
         call_outlook_agent,
         call_terraform_agent,
     ],

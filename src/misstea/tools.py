@@ -7,6 +7,7 @@ from misstea.sub_agents import (
     coding_agent,
     github_agent,
     google_search_agent,
+    image_generator_agent,
     outlook_agent,
     terraform_agent,
 )
@@ -76,6 +77,21 @@ async def call_google_search_agent(
     """
     return await _call_agent_helper(
         google_search_agent, "google_search", question, tool_context
+    )
+
+
+async def call_image_generator_agent(
+    question: str,
+    tool_context: ToolContext,
+) -> Any:
+    """Tool to call Image Generator agent.
+
+    Returns:
+        Any: The output from the Image Generator agent.
+
+    """
+    return await _call_agent_helper(
+        image_generator_agent, "image_generato", question, tool_context
     )
 
 
