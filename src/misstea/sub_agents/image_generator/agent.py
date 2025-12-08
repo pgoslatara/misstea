@@ -38,7 +38,7 @@ def generate_image(prompt: str) -> Dict[str, str]:
         0
     ].content.parts:
         if part.inline_data:
-            image = Image.open(BytesIO((part.inline_data.data)))
+            image = Image.open(BytesIO((part.inline_data.data)))  # ty: ignore[invalid-argument-type]
             for ext in extensions:
                 image.save(f"{output_filename}.{ext}")
 
