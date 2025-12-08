@@ -4,41 +4,22 @@ from google.adk.code_executors import BuiltInCodeExecutor
 from misstea.constants import AGENT_MODEL
 
 
-def get_coding_agent() -> Agent:
-    """Return a coding agent.
+def get_calculator_agent() -> Agent:
+    """Return a calculator agent.
 
     Returns:
-        Agent: The coding agent.
+        Agent: The calculator agent.
 
     """
     return Agent(
         model=AGENT_MODEL,
-        name="coding_agent",
+        name="calculator_agent",
         code_executor=BuiltInCodeExecutor(),
-        instruction="""You are a helpful coding assistant. You can:
-
-        * Read, write, and modify files.
-        * Execute code to perform calculations.
-
-        Constraints:
-        *
-
-        Information:
-            * When looking for a file path that was manually inputted, if the path does not exist, then assume that a typo was made. Use your tools to identify where the typo was most likely made and fix it, then alert the user that you have corrected the path. For example, if directed to a directory named `/home/pslattery/workpsace/client_a` and you find that this doesn't exist, first check that `/home/pslattery/workpsace` exists, if it does not, then assess if a similarly named directory like `/home/pslattery/workspace` exists and use that instead.
-            * How I structure my repositories:
-                * All my client work lives in the `/home/pslattery/workspace` directory. Each sub-directory within this directory contains the files for a single client, for example `/home/pslattery/workspace/client_a` contains all files for client_a.
-                * For each client I have a `repos` directory. Each sub-directory within this directory represents a repository. For example, `/home/pslattery/workspace/client_a/repos/data-dbt` contains all files the for the `data-dbt` repository for client_a.
-                * Non-client repositories are stored in `/home/pslattery/repos`.
-                * If asked to find a repository, assess if it relates to a client or not, then use the above information to search for the relevant directory.
+        instruction="""You are a calculator agent.
+        When given a mathematical expression, write and execute Python code to calculate the result.
+        Return only the final numerical result as plain text, without markdown, code blocks or description.
         """,
-        # tools=[
-        #     list_directory_contents,
-        #     read_directory,
-        #     read_file,
-        #     write_to_file,
-        #     replace_in_file,
-        # ],
     )
 
 
-root_agent = get_coding_agent()
+root_agent = get_calculator_agent()

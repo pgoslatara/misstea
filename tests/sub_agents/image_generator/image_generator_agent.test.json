@@ -1,17 +1,17 @@
 {
-  "eval_set_id": "google_search_agent_eval_set",
-  "name": "Google Search Agent Evaluation Set",
-  "description": "This is an eval set for unit testing the Google Search agent.",
+  "eval_set_id": "image_generator_agent_eval_set",
+  "name": "Image Generator Agent Evaluation Set",
+  "description": "This is an eval set for unit testing the Image Generator agent.",
   "eval_cases": [
     {
-      "eval_id": "capital_of_france",
+      "eval_id": "basic_image",
       "conversation": [
         {
           "invocation_id": "d7982664-0ab6-47cc-ab13-326656afdf75",
           "user_content": {
             "parts": [
               {
-                "text": "What is the capital of France? This is a unit test so please return only the name of the city and no other information. Return only a single word."
+                "text": "Generate an image of the Eiffel tower on a snowy day. Tell me the name of the file where the image is saved, only the name and not the directory. Your response should be limited to '<IMAGE_NAME>' only, nothing more."
               }
             ],
             "role": "user"
@@ -19,7 +19,7 @@
           "final_response": {
             "parts": [
               {
-                "text": "Paris"
+                "text": "generated_image_."
               }
             ],
             "role": "model"
@@ -31,7 +31,7 @@
         }
       ],
       "session_input": {
-        "app_name": "misstea.sub_agents.google_search.agent",
+        "app_name": "misstea.sub_agents.image_generator.agent",
         "user_id": "test_user",
         "state": {}
       }

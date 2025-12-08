@@ -11,7 +11,7 @@
           "user_content": {
             "parts": [
               {
-                "text": "When was the 'godatadriven/dbt-bouncer' repository created? Return only the date value, do not include any other characters. Use the yyyy-MM-dd format."
+                "text": "When was the 'godatadriven/dbt-bouncer' repository created? Return only the date value, do not include any other characters. Use the yyyy-MM-dd format. Do not include a description like 'The godatadriven/dbt-bouncer repository was created on ...'."
               }
             ],
             "role": "user"

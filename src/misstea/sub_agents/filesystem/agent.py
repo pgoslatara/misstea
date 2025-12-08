@@ -11,10 +11,10 @@ from misstea.constants import AGENT_MODEL
 
 
 def get_filesystem_agent() -> LlmAgent:
-    """Return an Image Generator agent.
+    """Return an filesystem agent.
 
     Returns:
-        Agent: The Image Generator agent.
+        Agent: The filesystem agent.
 
     """
     return LlmAgent(
