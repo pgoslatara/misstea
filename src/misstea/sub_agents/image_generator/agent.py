@@ -7,7 +7,7 @@ from typing import Dict
 from google import genai
 from google.adk.agents import Agent
 from google.genai.types import GenerateContentConfig, Modality
-from PIL import Image
+from PIL import Image  # ty: ignore[unresolved-import]
 
 from misstea.constants import AGENT_MODEL
 
