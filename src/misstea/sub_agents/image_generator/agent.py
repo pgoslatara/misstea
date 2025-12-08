@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 from io import BytesIO
+from pathlib import Path
 from typing import Dict
 
 from google import genai
@@ -26,6 +27,7 @@ def generate_image(prompt: str) -> Dict[str, str]:
     """
     extensions = ["jpeg", "png"]
     output_filename = f"{os.environ['IMAGE_GENERATION_DIR']}/generated_image_{datetime.datetime.now(datetime.timezone.utc).timestamp()}"
+    Path(output_filename).parent.mkdir(exist_ok=True, parents=True)
     client = genai.Client()
     response = client.models.generate_content(
         model="gemini-3-pro-image-preview",
