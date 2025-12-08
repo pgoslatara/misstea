@@ -10,6 +10,7 @@ from misstea.sub_agents import (
     github_agent,
     google_search_agent,
     image_generator_agent,
+    interactive_blogger_agent,
     outlook_agent,
     terraform_agent,
 )
@@ -123,7 +124,22 @@ async def call_image_generator_agent(
 
     """
     return await _call_agent_helper(
-        image_generator_agent, "image_generato", question, tool_context
+        image_generator_agent, "image_generator", question, tool_context
+    )
+
+
+async def call_interactive_blogger_agent(
+    question: str,
+    tool_context: ToolContext,
+) -> Any:
+    """Tool to call interactive_blogger_agent agent.
+
+    Returns:
+        Any: The output from the interactive_blogger_agent agent.
+
+    """
+    return await _call_agent_helper(
+        interactive_blogger_agent, "interactive_blogger", question, tool_context
     )
 
 

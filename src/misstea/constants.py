@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-AGENT_MODEL = "gemini-2.5-flash-preview-09-2025"  # https://ai.google.dev/gemini-api/docs/models#gemini-2.5-flash-preview
+AGENT_MODEL = "gemini-2.5-flash"  # https://ai.google.dev/gemini-api/docs/models#gemini-2.5-flash-preview
 MEETING_ROOMS = [
     {"name": "Airflow", "screen": True},
     {"name": "Arcus", "screen": False},

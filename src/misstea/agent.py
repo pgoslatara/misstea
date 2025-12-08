@@ -8,6 +8,7 @@ from misstea.tools import (
     call_github_agent,
     call_google_search_agent,
     call_image_generator_agent,
+    call_interactive_blogger_agent,
     call_outlook_agent,
     call_terraform_agent,
 )
@@ -31,6 +32,7 @@ root_agent: LlmAgent = LlmAgent(
             * To book meeting rooms, use outlook_agent.
             * To search the internet, use google_search_agent.
             * To read, write, or modify files, use coding_agent.
+            * To write blog posts, use interactive_blogger_agent.
 
         Constraints:
             * Do not return code samples from terraform.com.
@@ -46,6 +48,7 @@ root_agent: LlmAgent = LlmAgent(
         call_github_agent,
         call_google_search_agent,
         call_image_generator_agent,
+        call_interactive_blogger_agent,
         call_outlook_agent,
         call_terraform_agent,
     ],

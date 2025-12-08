@@ -3,6 +3,7 @@ authors = [
     {name = "Padraic Slattery", email = "pgoslatara@gmail.com"}
 ]
 dependencies = [
+    "blogger-agent @ git+https://github.com/google/adk-samples@main#subdirectory=python/agents/blog-writer",
     "chardet>=5,<6",
     "click>=8,<9",
     "duckdb>=1,<2",
