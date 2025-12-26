@@ -11,6 +11,7 @@ from misstea.tools import (
     call_interactive_blogger_agent,
     call_outlook_agent,
     call_terraform_agent,
+    call_web_scraper_agent,
 )
 from misstea.utils import get_current_date, get_current_time
 
@@ -33,6 +34,7 @@ root_agent: LlmAgent = LlmAgent(
             * To search the internet, use google_search_agent.
             * To read, write, or modify files, use coding_agent.
             * To write blog posts, use interactive_blogger_agent.
+            * To get the contents of a web page, use web_scraper_agent.
 
         Constraints:
             * Do not return code samples from terraform.com.
@@ -51,5 +53,6 @@ root_agent: LlmAgent = LlmAgent(
         call_interactive_blogger_agent,
         call_outlook_agent,
         call_terraform_agent,
+        call_web_scraper_agent,
     ],
 )

@@ -11,6 +11,7 @@ from misstea.sub_agents.interactive_blogger.agent import (
 )
 from misstea.sub_agents.outlook.agent import root_agent as outlook_agent
 from misstea.sub_agents.terraform.agent import root_agent as terraform_agent
+from misstea.sub_agents.web_scraper.agent import root_agent as web_scraper_agent
 
 __all__ = [
     "calculator_agent",
@@ -22,4 +23,5 @@ __all__ = [
     "interactive_blogger_agent",
     "outlook_agent",
     "terraform_agent",
+    "web_scraper_agent",
 ]

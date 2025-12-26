@@ -13,6 +13,7 @@ from misstea.sub_agents import (
     interactive_blogger_agent,
     outlook_agent,
     terraform_agent,
+    web_scraper_agent,
 )
 
 
@@ -168,4 +169,19 @@ async def call_terraform_agent(
     """
     return await _call_agent_helper(
         terraform_agent, "terraform", question, tool_context
+    )
+
+
+async def call_web_scraper_agent(
+    question: str,
+    tool_context: ToolContext,
+) -> Any:
+    """Tool to call Web Scraper agent.
+
+    Returns:
+        Any: The output from the Web Scraper agent.
+
+    """
+    return await _call_agent_helper(
+        web_scraper_agent, "web_scraper", question, tool_context
     )
