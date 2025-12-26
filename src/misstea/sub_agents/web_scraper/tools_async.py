@@ -29,14 +29,14 @@ async def scrape_generic_webpage_to_json(url: str) -> dict[str, Any] | None:
     llm_config = LLMConfig(provider=AGENT_MODEL, api_token=api_token)
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_config,
-        instruction=(
-            "Extract the comprehensive and detailed content of the entire webpage. "
-            "Identify and include all major headings, paragraphs, lists, and key information. "
-            "Structure the output as a single JSON object with a key named 'main_content' "
-            "whose value is a string containing all the extracted textual content."
-            "Do not include navigation, footers, sidebars, or advertisements. "
-            "Ensure the output is valid JSON."
-        ),
+        instruction="""
+            Extract the comprehensive and detailed content of the entire webpage.
+            Identify and include all major headings, paragraphs, lists, URL references, images URLs and key information.
+            Structure the output as a single JSON object with a key named 'main_content'
+            whose value is a string containing all the extracted textual content.
+            Do not include navigation, footers, sidebars, or advertisements.
+            Ensure the output is valid JSON.
+        """,
         extraction_type="free_form",
     )
     config = CrawlerRunConfig(extraction_strategy=extraction_strategy)
