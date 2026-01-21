@@ -8,7 +8,7 @@ from typing import Dict
 from google import genai
 from google.adk.agents import Agent
 from google.genai.types import GenerateContentConfig, Modality
-from PIL import Image  # ty: ignore[unresolved-import]
+from PIL import Image
 
 from misstea.constants import AGENT_MODEL
 
@@ -36,11 +36,12 @@ def generate_image(prompt: str) -> Dict[str, str]:
             response_modalities=[Modality.IMAGE],
         ),
     )
-    for part in response.candidates[  # ty: ignore[not-iterable, non-subscriptable, possibly-missing-attribute]
-        0
-    ].content.parts:
+    if not response.candidates:
+        logger.error("No candidates returned from the image generation model.")
+        return {"status": "failure", "report": "No candidates returned."}
+    for part in response.candidates[0].content.parts:
         if part.inline_data:
-            image = Image.open(BytesIO((part.inline_data.data)))  # ty: ignore[invalid-argument-type]
+            image = Image.open(BytesIO(part.inline_data.data))
             for ext in extensions:
                 image.save(f"{output_filename}.{ext}")
 

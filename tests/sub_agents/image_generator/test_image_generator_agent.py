@@ -4,7 +4,7 @@ import pytest
 from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
 
-@pytest.mark.flaky(reruns=int(os.getenv("SUB_AGENT_TEST_RERUNS", 3)))  # type: ignore
+@pytest.mark.flaky(reruns=int(os.getenv("SUB_AGENT_TEST_RERUNS", 3)))
 @pytest.mark.asyncio
 async def test_image_generator_agent():
     """Test the image_generator agent's basic ability via a session file."""
